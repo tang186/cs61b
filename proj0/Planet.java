@@ -53,7 +53,7 @@ public class Planet{
 		}
 		return SumF;
 	}
-	public boolean equals(Planet other){
+	private boolean equals(Planet other){
 		if (other == this){
 			return true;
 		}
