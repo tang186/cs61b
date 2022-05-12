@@ -57,7 +57,7 @@ public class Planet{
 		if (other == this){
 			return true;
 		}
-		return false;
+		else return false;
 	}
 	public void update(double dt,double fX,double fY){
 		double aX = fX / this.mass;
