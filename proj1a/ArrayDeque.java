@@ -10,7 +10,7 @@ public class ArrayDeque<T> {
         right = 0;
     }
     public void addFirst(T item) {
-        if (size() == capacity) {
+        if (size() == capacity - 1) {
             resize((int) (capacity * 1.2));
         }
         if (left - 1 < 0) {
@@ -21,7 +21,7 @@ public class ArrayDeque<T> {
         vals[left] = item;    //对于addFirst和addLast需要一个在当前添加，一个在变换位置后添加，这也可以最大效率利用空间。
     }
     public void addLast(T item) {
-        if (size() == capacity) {
+        if (size() == capacity - 1) {
             resize((int) (capacity * 1.2));
         }
         vals[right] = item;
