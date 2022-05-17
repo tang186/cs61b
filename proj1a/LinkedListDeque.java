@@ -28,15 +28,17 @@ public class LinkedListDeque<T> {
         size++;
     }
     public void addLast(T item) {
-        Node newNode = new Node(sentinel, item, null);
-        sentinel.next.pre = newNode;
-        sentinel.next = newNode;
+        Node newNode = new Node(sentinel.pre, item, sentinel);
+        sentinel.pre.next = newNode;
+        sentinel.pre = newNode;
         size++;
     }
     public boolean isEmpty(){
+
         return size == 0;
     }
     public int size() {
+
         return size;
     }
     public void printDeque(){
@@ -44,20 +46,22 @@ public class LinkedListDeque<T> {
         while(i.next != sentinel){
             System.out.print(i.val + " ");
         }
-        System.out.print(i.val);
+        if (i != sentinel)  System.out.print(i.val);
     }
-    public T removerFirst(T item){
+    public T removeFirst(){
         if (sentinel.next != sentinel){
             T val = sentinel.next.val;
             sentinel.next =sentinel.next.next;
+            size--;
             return val;
         }
         return null;
     }
-    public T removerLast(){
+    public T removeLast(){
         if (sentinel.pre != sentinel){
             T val = sentinel.pre.val;
             sentinel.pre =sentinel.pre.pre;
+            size--;
             return val;
         }
         return null;
