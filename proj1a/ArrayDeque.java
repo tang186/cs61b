@@ -13,11 +13,7 @@ public class ArrayDeque<T> {
         if (size() == capacity - 1) {
             resize((int) (capacity * 1.2));
         }
-        if (left - 1 < 0) {
-            left = left + capacity - 1;
-        } else {
-            left = left - 1;
-        }
+        left = (capacity + left - 1) % capacity;
         vals[left] = item;    //对于addFirst和addLast需要一个在当前添加，一个在变换位置后添加，这也可以最大效率利用空间。
     }
     public void addLast(T item) {
@@ -64,7 +60,7 @@ public class ArrayDeque<T> {
         return ans;
     }
     public T get(int index) {
-        if (index < 0 || index > size() || isEmpty()) {
+        if (index < 0 || index >= size() || isEmpty()) {
             return null;
         }
         if (right > left) {
@@ -80,14 +76,25 @@ public class ArrayDeque<T> {
         return false;
     }
     private void resize(int newsize) {
+        //要按照新的size去重新赋值，如果还是按照原来的大小会出现不连续的值的情况
         T[] newvals = (T[]) new Object[newsize];
 
-        int begin = left;
-        int end = right;
-        while (begin != end) {
-            newvals[begin] = vals[begin];
-            begin = (begin + 1 + capacity) % capacity;
+        int size = size();
+        if (left < right) {
+            for (int i = left, j = 0; i < right && j < size; i++, j++) {
+                newvals[j] = vals[i];
+            }
+        } else if (left > right) {
+            int j = 0;
+            for (int i = left; j < capacity - left; i++, j++) {
+                newvals[j] = vals[i];
+            }
+            for (int i = 0; j < size; i++, j++) {
+                newvals[j] = vals[i];
+            }
         }
+        left = 0;
+        right = size;
         capacity = newsize;
         vals = newvals;
     }
