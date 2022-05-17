@@ -4,7 +4,7 @@ public class LinkedListDeque<T> {
         private  Node pre;
         private  T val;
         private  Node next;
-        private  Node(LinkedListDeque<T>.Node pre, T val, LinkedListDeque<T>.Node next){
+        private  Node(LinkedListDeque<T>.Node pre, T val, LinkedListDeque<T>.Node next) {
             this.pre = pre;
             this.val = val;
             this.next = next;
@@ -13,7 +13,7 @@ public class LinkedListDeque<T> {
     private Node sentinel;
     private int size;
     public LinkedListDeque() {
-        sentinel = new Node(null,(T) new Object(), null);
+        sentinel = new Node(null, (T) new Object(), null);
         // new Object() 是创建一个匿名变量，例如可以
         //var a = new Object(2);
         //就是将a定义为2，把2换成 's'就是把a定义为字符 's'
@@ -52,17 +52,17 @@ public class LinkedListDeque<T> {
     public T removeFirst() {
         if (sentinel.next != sentinel) {
             T val = sentinel.next.val;
-            sentinel.next =sentinel.next.next;
+            sentinel.next = sentinel.next.next;
             sentinel.next.pre = sentinel;
             size--;
             return val;
         }
         return null;
     }
-    public T removeLast(){
+    public T removeLast() {
         if (sentinel.pre != sentinel) {
             T val = sentinel.pre.val;
-            sentinel.pre =sentinel.pre.pre;
+            sentinel.pre = sentinel.pre.pre;
             sentinel.pre.next = sentinel;
             size--;
             return val;
@@ -72,7 +72,7 @@ public class LinkedListDeque<T> {
     public T get(int index) {
         int num = 0;
         Node tmp = sentinel.next;
-        while(num != index){
+        while (num != index) {
             tmp = tmp.next;
             if (tmp == sentinel) {
                 return null;

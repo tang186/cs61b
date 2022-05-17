@@ -14,25 +14,27 @@ public class ArrayDeque<T> {
             resize((int) (capacity * 1.2));
         }
         if (left - 1 < 0) {
-            left = left + capacity - 1; }
-        else {
+            left = left + capacity - 1;
+        } else {
             left = left - 1;
         }
         vals[left] = item;    //对于addFirst和addLast需要一个在当前添加，一个在变换位置后添加，这也可以最大效率利用空间。
     }
     public void addLast (T item) {
         if (size() == capacity) {
-            resize((int)(capacity * 1.2));
+            resize((int) (capacity * 1.2));
         }
         vals[right] = item;
         if (right + 1 > capacity) {
-            right = right - capacity + 1; }
-        else right = right + 1;
+            right = right - capacity + 1;
+        } else {
+            right = right + 1;
+        }
     }
-    public int size(){
+    public int size() {
         return (right - left + capacity) % capacity;
     }
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return right == left;
     }
     public void printDeque() {
@@ -48,9 +50,9 @@ public class ArrayDeque<T> {
             return null;
         }
         T ans = vals[left];
-        left = (left + 1 + capacity) % capacity;
-        if (LowRate()) {
-            resize((int)(capacity * 0.5));
+        left = (left + 1 ) % capacity;
+        if (lowRate()) {
+            resize((int) (capacity * 0.5));
         }
         return ans;
     }
@@ -60,8 +62,8 @@ public class ArrayDeque<T> {
         }
         right = (right - 1 + capacity) % capacity;
         T ans = vals[right];
-        if (LowRate()) {
-            resize((int)(capacity * 0.5));
+        if (lowRate()) {
+            resize((int) (capacity * 0.5));
         }
         return ans;
     }
@@ -71,11 +73,12 @@ public class ArrayDeque<T> {
         }
         if (right > left) {
             return vals[left + index];
+        } else {
+            return vals[(left + index ) % capacity];
         }
-        else return vals[(left + index + capacity) % capacity];
     }
-    private boolean LowRate() {
-        if (capacity >= 16 && size() / (double)capacity < 0.25) {
+    private boolean lowRate() {
+        if (capacity >= 16 && size() / (double) capacity < 0.25) {
             return true;
         }
         return false;
