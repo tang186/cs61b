@@ -33,40 +33,43 @@ public class LinkedListDeque<T> {
         sentinel.pre = newNode;
         size++;
     }
-    public boolean isEmpty(){
-
+    public boolean isEmpty() {
         return size == 0;
     }
     public int size() {
 
         return size;
     }
-    public void printDeque(){
+    public void printDeque() {
         Node i = sentinel.next;
-        while(i.next != sentinel){
+        while (i.next != sentinel) {
             System.out.print(i.val + " ");
         }
-        if (i != sentinel)  System.out.print(i.val);
+        if (i != sentinel) {
+            System.out.print(i.val);
+        }
     }
-    public T removeFirst(){
-        if (sentinel.next != sentinel){
+    public T removeFirst() {
+        if (sentinel.next != sentinel) {
             T val = sentinel.next.val;
             sentinel.next =sentinel.next.next;
+            sentinel.next.pre = sentinel;
             size--;
             return val;
         }
         return null;
     }
     public T removeLast(){
-        if (sentinel.pre != sentinel){
+        if (sentinel.pre != sentinel) {
             T val = sentinel.pre.val;
             sentinel.pre =sentinel.pre.pre;
+            sentinel.pre.next = sentinel;
             size--;
             return val;
         }
         return null;
     }
-    public T get(int index){
+    public T get(int index) {
         int num = 0;
         Node tmp = sentinel.next;
         while(num != index){
@@ -78,14 +81,14 @@ public class LinkedListDeque<T> {
         }
         return tmp.val;
     }
-    public T getRecursive(int index){
-        if(size < index){
+    public T getRecursive(int index) {
+        if (size < index) {
             return null;
         }
         return getRecHelp(sentinel.next, index);
     }
-    public T getRecHelp(LinkedListDeque<T>.Node node, int index){
-        if (index == 0){
+    private T getRecHelp(LinkedListDeque<T>.Node node, int index) {
+        if (index == 0) {
             return node.val;
         }
         return getRecHelp(node.next, index - 1);
