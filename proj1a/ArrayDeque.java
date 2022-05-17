@@ -2,10 +2,10 @@ public class ArrayDeque<T> {
     private T[] vals;
     private int left;
     private int right;
-    private int capacity;
+    private int capacity = 8;
     public ArrayDeque() {
         vals = (T[]) new Object[capacity];
-        capacity = 8;
+        //capacity = 8;
         left = 0;
         right = 0;
     }
@@ -20,16 +20,12 @@ public class ArrayDeque<T> {
         }
         vals[left] = item;    //对于addFirst和addLast需要一个在当前添加，一个在变换位置后添加，这也可以最大效率利用空间。
     }
-    public void addLast (T item) {
+    public void addLast(T item) {
         if (size() == capacity) {
             resize((int) (capacity * 1.2));
         }
         vals[right] = item;
-        if (right + 1 > capacity) {
-            right = right - capacity + 1;
-        } else {
-            right = right + 1;
-        }
+        right = (right + 1) % capacity;
     }
     public int size() {
         return (right - left + capacity) % capacity;
@@ -50,7 +46,7 @@ public class ArrayDeque<T> {
             return null;
         }
         T ans = vals[left];
-        left = (left + 1 ) % capacity;
+        left = (left + 1) % capacity;
         if (lowRate()) {
             resize((int) (capacity * 0.5));
         }
@@ -74,7 +70,7 @@ public class ArrayDeque<T> {
         if (right > left) {
             return vals[left + index];
         } else {
-            return vals[(left + index ) % capacity];
+            return vals[(left + index) % capacity];
         }
     }
     private boolean lowRate() {
