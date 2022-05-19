@@ -1,4 +1,4 @@
-public class ArrayDeque<T> implements Deque<T>;{
+public class ArrayDeque<T> implements Deque<T> {
     private T[] vals;
     private int left;
     private int right;
@@ -9,13 +9,16 @@ public class ArrayDeque<T> implements Deque<T>;{
         left = 0;
         right = 0;
     }
+    @Override
     public void addFirst(T item) {
         if (size() == capacity - 1) {
             resize((int) (capacity * 1.2));
         }
         left = (capacity + left - 1) % capacity;
-        vals[left] = item;    //对于addFirst和addLast需要一个在当前添加，一个在变换位置后添加，这也可以最大效率利用空间。
+        vals[left] = item;
+        //对于addFirst和addLast需要一个在当前添加，一个在变换位置后添加，这也可以最大效率利用空间。
     }
+    @Override
     public void addLast(T item) {
         if (size() == capacity - 1) {
             resize((int) (capacity * 1.2));
@@ -23,12 +26,15 @@ public class ArrayDeque<T> implements Deque<T>;{
         vals[right] = item;
         right = (right + 1) % capacity;
     }
+    @Override
     public int size() {
         return (right - left + capacity) % capacity;
     }
+    @Override
     public boolean isEmpty() {
         return right == left;
     }
+    @Override
     public void printDeque() {
         int i = left;
         while (i + 1 != right) {
@@ -37,6 +43,7 @@ public class ArrayDeque<T> implements Deque<T>;{
         }
         System.out.print(vals[i]);
     }
+    @Override
     public T removeFirst() {
         if (isEmpty()) {
             return null;
@@ -48,6 +55,7 @@ public class ArrayDeque<T> implements Deque<T>;{
         }
         return ans;
     }
+    @Override
     public T removeLast() {
         if (isEmpty()) {
             return null;
@@ -59,6 +67,7 @@ public class ArrayDeque<T> implements Deque<T>;{
         }
         return ans;
     }
+    @Override
     public T get(int index) {
         if (index < 0 || index >= size() || isEmpty()) {
             return null;
